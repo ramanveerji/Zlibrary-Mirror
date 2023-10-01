@@ -19,7 +19,7 @@ class Data:
             cursor.execute(sql, (id,))
             sql_result = cursor.fetchone()
 
-        info = {
+        return {
             'id': sql_result[0],
             'title': sql_result[1],
             'author': sql_result[2],
@@ -28,19 +28,17 @@ class Data:
             'extension': sql_result[5],
             'source': sql_result[6],
         }
-        return info
 
     def search(self, keyword, field):
         with self.connection.cursor() as cursor:
             sql = "SELECT * FROM `book` WHERE MATCH (title) AGAINST (%s) LIMIT 100"
             cursor.execute(sql, (keyword, ))
             sql_result_list = cursor.fetchall()
-        info_list = [self.format_info(sql_result) for sql_result in sql_result_list]
-        return info_list
+        return [self.format_info(sql_result) for sql_result in sql_result_list]
 
     @staticmethod
     def format_info(sql_result):
-        info = {
+        return {
             'id': sql_result[0],
             'title': sql_result[1],
             'author': sql_result[2],
@@ -49,7 +47,6 @@ class Data:
             'extension': sql_result[5],
             'source': sql_result[6],
         }
-        return info
 
     @staticmethod
     def create_sql():
