@@ -23,8 +23,12 @@ def download(id):
     title = info['title']
     extension = info['extension']
     base_dir = '/Volumes/Data-Resource/R-Book-ZLibrary'
-    response = send_from_directory(base_dir, id, as_attachment=True, attachment_filename=title + '.' + extension)
-    return response
+    return send_from_directory(
+        base_dir,
+        id,
+        as_attachment=True,
+        attachment_filename=f'{title}.{extension}',
+    )
 
 if __name__ == '__main__':
     app.run()
